@@ -1,36 +1,43 @@
 import PrecioEspecial from '../models/PrecioEspecial.js';
 
-export const crearPrecioEspecial = async (precioData) => {
-  try {
-    const nuevoPrecio = new PrecioEspecial(precioData);
-    return await nuevoPrecio.save();
-  } catch (error) {
-    throw new Error(`Error al crear precio especial: ${error.message}`);
-  }
-};
+export const precioEspecialService = {
+  // CREATE - Asignar precio especial
+  async crear(datos) {
+    return await PrecioEspecial.create(datos);
+  },
 
-export const obtenerPreciosUsuario = async (usuarioId) => {
-  try {
-    return await PrecioEspecial.find({ usuarioId })
-      .populate('productoId', 'nombre precioBase sku')
-      .populate('metadata.creadoPor', 'nombre email')
-      .lean();
-  } catch (error) {
-    throw new Error(`Error al obtener precios: ${error.message}`);
-  }
-};
+  // READ ALL - Obtener todos los precios
+  async obtenerTodos() {
+    return await PrecioEspecial.find().populate('usuario producto');
+  },
 
-export const actualizarPrecio = async (precioId, updateData) => {
-  try {
-    return await PrecioEspecial.findByIdAndUpdate(
-      precioId,
-      {
-        ...updateData,
-        'metadata.ultimaModificacion': Date.now()
-      },
-      { new: true, runValidators: true }
-    );
-  } catch (error) {
-    throw new Error(`Error al actualizar precio: ${error.message}`);
+  // READ BY ID - Obtener por ID
+  async obtenerPorId(id) {
+    return await PrecioEspecial.findById(id).populate('usuario producto');
+  },
+
+  // UPDATE - Actualizar precio
+  async actualizar(id, nuevosDatos) {
+    return await PrecioEspecial.findByIdAndUpdate(id, nuevosDatos, { 
+      new: true 
+    }).populate('usuario producto');
+  },
+
+  // DELETE - Eliminar asignación
+  async eliminar(id) {
+    return await PrecioEspecial.findByIdAndDelete(id);
+  },
+
+  // ASIGNAR PRECIO ESPECIAL (Método específico)
+  async asignarPrecio(usuarioId, productoId, precio) {
+    return this.crear({
+      usuario: usuarioId,
+      producto: productoId,
+      precio: precio,
+      vigencia: {
+        inicio: new Date(),
+        fin: null // Sin fecha de expiración
+      }
+    });
   }
 };

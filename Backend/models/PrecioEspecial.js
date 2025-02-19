@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
 
 const precioEspecialSchema = new mongoose.Schema({
-  usuarioId: {
+  usuario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario',
-    required: true,
+    required: [true, 'Usuario requerido'],
     index: true
   },
-  productoId: {
+  producto: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Producto',
-    required: true,
+    required: [true, 'Producto requerido'],
     index: true
   },
   precio: {
     type: Number,
-    required: true,
-    min: 0
+    required: [true, 'Precio especial requerido'],
+    min: [0.01, 'El precio mínimo es 0.01']
   },
   vigencia: {
     inicio: {
@@ -24,30 +24,51 @@ const precioEspecialSchema = new mongoose.Schema({
       required: true,
       default: Date.now
     },
-    fin: Date
+    fin: {
+      type: Date,
+      validate: {
+        validator: function(value) {
+          return !value || value > this.vigencia.inicio;
+        },
+        message: 'Fecha fin debe ser posterior al inicio'
+      }
+    }
   },
-  metadata: {
-    creadoPor: {
+  historial: [{
+    precioAnterior: Number,
+    modificadoPor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Usuario',
-      required: true
+      ref: 'Usuario'
     },
-    ultimaModificacion: {
+    fechaModificacion: {
       type: Date,
       default: Date.now
     }
-  }
-}, { collection: 'preciosEspecialesGomez25' });
+  }]
+}, { 
+  timestamps: true,
+  collection: 'preciosEspecialesColina24' 
+});
 
-precioEspecialSchema.index({ usuarioId: 1, productoId: 1 });
+// Índice único compuesto
+precioEspecialSchema.index({ usuario: 1, producto: 1 }, { unique: true });
 
-// Middleware de validación
+// Middleware para registro histórico
 precioEspecialSchema.pre('save', function(next) {
-  if (this.vigencia.fin && this.vigencia.fin <= this.vigencia.inicio) {
-    const error = new Error('Fecha fin debe ser posterior a fecha inicio');
-    return next(error);
+  if (this.isModified('precio')) {
+    this.historial.push({
+      precioAnterior: this.precio,
+      modificadoPor: this.constructor.currentUser // Debes setear este valor desde el middleware de autenticación
+    });
   }
   next();
 });
+
+// Método de instancia
+precioEspecialSchema.methods.estaVigente = function() {
+  const ahora = new Date();
+  return ahora >= this.vigencia.inicio && 
+        (!this.vigencia.fin || ahora <= this.vigencia.fin);
+};
 
 export default mongoose.model('PrecioEspecial', precioEspecialSchema);

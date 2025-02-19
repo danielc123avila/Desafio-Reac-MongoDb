@@ -1,0 +1,123 @@
+Documentación del Backend - Sistema de Precios Especiales 🛒
+
+Tabla de Contenidos
+Descripción
+Características Técnicas
+Elección de JavaScript sobre TypeScript
+Configuración del Entorno
+Instalación
+Endpoints API
+Variables de Entorno
+Ejemplo de Uso
+Descripción 🚀
+Backend para gestión de precios especiales por usuario/producto, con:
+
+Autenticación JWT 🔐
+CRUD completo para productos y usuarios
+Asignación de precios especiales con historial de cambios
+Consulta de precios personalizados por usuario
+Características Técnicas 🛠️
+Tecnología	Uso	Versión
+Node.js	Entorno de ejecución	18+
+Express.js	Framework web	4.21.2
+MongoDB	Base de datos NoSQL	6.10.2
+Mongoose	ODM para MongoDB	8.10.1
+JWT	Autenticación por tokens	9.0.2
+Bcrypt	Hash de contraseñas	5.1.1
+Elección de JavaScript sobre TypeScript ⚖️
+Razones clave para JavaScript:
+
+Simplicidad Inicial
+
+Menos configuración (tsconfig.json, tipos, etc.)
+Ideal para prototipado rápido
+Ecosistema Amplio
+
+Mayor cantidad de librerías y ejemplos disponibles
+Curva de Aprendizaje
+
+Equipos con mayor experiencia en JS puro
+Flexibilidad
+
+Tipado dinámico útil en ciertos escenarios complejos
+¿Cuándo considerar TypeScript?
+
+Proyectos a gran escala
+Equipos grandes con necesidad de contratos claros
+Prevención temprana de errores de tipo
+Configuración del Entorno ⚙️
+Requisitos
+
+Node.js v18+
+MongoDB local o en la nube
+Postman/Insomnia para pruebas
+Estructura de Archivos
+
+Copiar
+.
+├── config/
+│   └── db.js         # Conexión a MongoDB
+├── controllers/      # Lógica de endpoints
+├── models/           # Esquemas de Mongoose
+├── routes/           # Definición de rutas
+├── services/         # Lógica de negocio
+└── app.js            # Configuración principal
+Instalación 📦
+Copiar
+# 1. Clonar repositorio
+git clone [url_repositorio]
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Configurar variables de entorno (crear .env)
+cp .env.example .env
+
+# 4. Iniciar servidor
+npm run dev
+Endpoints API 🌐
+Autenticación
+Método	Ruta	Descripción
+POST	/api/login	Obtener token JWT
+POST	/api/registro	Crear nuevo usuario
+Productos
+Método	Ruta	Descripción
+GET	/api/productos	Listar todos los productos
+POST	/api/productos	Crear nuevo producto
+Precios Especiales
+Método	Ruta	Descripción
+POST	/api/asignar	Asignar precio especial
+GET	/api/get	Listar asignaciones
+Variables de Entorno 🔑
+Copiar
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/desafio-Reac-MongoDb
+JWT_SECRET=mi_secreto_super_seguro
+JWT_EXPIRES=2h
+Ejemplo de Uso 💻
+Asignar precio especial:
+
+Copiar
+// POST /api/asignar
+{
+  "usuarioId": "67b60192a241682bfe64979a",
+  "productoId": "67b604260bbb6a9f3fa1a1c4",
+  "precio": 199.99
+}
+Respuesta exitosa:
+
+Copiar
+{
+  "_id": "67b60a2e5d1f8a3f4e7d2b1c",
+  "usuario": "67b60192a241682bfe64979a",
+  "producto": "67b604260bbb6a9f3fa1a1c4",
+  "precio": 199.99,
+  "vigencia": {
+    "inicio": "2025-02-19T16:05:00.000Z",
+    "fin": null
+  }
+}
+¡Proyecto listo para usar! 🚀
+
+⬆️ Volver al inicio
+

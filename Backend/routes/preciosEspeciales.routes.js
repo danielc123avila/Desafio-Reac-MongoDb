@@ -1,15 +1,13 @@
-import { Router } from 'express';
-import { 
-  crearPrecio, 
-  obtenerPrecios, 
-  actualizarPrecio 
-} from '../controllers/preciosEspeciales.controller.js';
-import authMiddleware from '../middlewares/auth.middleware.js';
+import express from 'express';
+import { precioEspecialController } from '../controllers/preciosEspeciales.controller.js';
 
-const router = Router();
+const router = express.Router();
 
-router.post('/', authMiddleware, crearPrecio);
-router.get('/usuario/:usuarioId', authMiddleware, obtenerPrecios);
-router.put('/:id', authMiddleware, actualizarPrecio);
+// CRUD Básico
+router.post('/asignar', precioEspecialController.asignarPrecio);
+router.get('/get', precioEspecialController.obtenerTodos);
+router.get('/:id', precioEspecialController.obtenerPorId);
+router.put('/:id', precioEspecialController.actualizar);
+router.delete('/:id', precioEspecialController.eliminar);
 
 export default router;

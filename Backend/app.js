@@ -1,6 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import connectDB from "./config/db.js";
+import preciosRoutes from "./routes/preciosEspeciales.routes.js";
+import productosRoutes from './routes/productos.routes.js';
+import usuariosRoutes from './routes/usuarios.routes.js';
 
 const app = express();
 
@@ -12,16 +16,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Definir un router
-const router = express.Router();
-
-// Ejemplo de ruta en el router
-router.get("/", (req, res) => {
-  res.send("Hola desde el API!");
-});
+// Conectar a la base de datos
+connectDB();
 
 // Usar el router para las rutas con "/api"
-app.use("/api", router);
+app.use("/api", preciosRoutes);
+app.use("/api", productosRoutes);
+app.use("/api/usuarios", usuariosRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;
