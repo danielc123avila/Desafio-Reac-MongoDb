@@ -7,5 +7,4 @@ router.post('/registro', registrarUsuario);
 router.post('/login', loginUsuario);
 
 
-
 export default router;
