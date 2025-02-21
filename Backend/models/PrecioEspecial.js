@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 
 const precioEspecialSchema = new mongoose.Schema({
-  usuario: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-    required: [true, 'Usuario requerido'],
-    index: true
+  usuario: { 
+    type: String,
+    required: [true, 'Email de usuario requerido'],
+    index: true,
+    match: [/\S+@\S+\.\S+/, 'Formato de email inválido']
   },
-  producto: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Producto',
-    required: [true, 'Producto requerido'],
-    index: true
+  producto: {  
+    type: String,
+    required: [true, 'Nombre de producto requerido'],
+    index: true,
+    maxlength: [100, 'Máximo 100 caracteres para el nombre']
   },
   precio: {
     type: Number,

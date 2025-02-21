@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50;
+}
+
+/* Estilos personalizados */
+.input-error {
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500;
+}
+
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
