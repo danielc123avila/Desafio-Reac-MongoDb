@@ -129,9 +129,82 @@ Para proyectos grandes considerar migrar a TypeScript para:
 
 Contribuciones bienvenidas via Pull Requests.
 
+# FrontEnd
 
-Este archivo README.md está listo para:
-1. Copiar directamente en tu proyecto
-2. Personalizar con tus datos específicos
-3. Usar emojis y formato Markdown para mejor legibilidad
-4. Incluir toda la información esencial para desarrolladores
+# Sistema de Gestión de Precios Especiales
+
+<div align="center">
+  <img src="https://placehold.co/800x400?text=Dashboard+Preview" alt="Dashboard Preview">
+  <p>🛠️ Plataforma para gestión de productos y precios especiales por cliente</p>
+</div>
+
+## 🚀 Características Principales
+- **CRUD completo de productos**
+- **Asignación de precios especiales** a clientes específicos
+- Dashboard interactivo con 3 secciones:
+  - 📦 Listado de productos
+  - 📝 Formularios de creación
+  - 💰 Gestión de precios especiales
+- UI responsiva con **Tailwind CSS**
+- Validaciones en tiempo real
+
+## 📦 Dependencias Principales
+```bash
+"dependencies": {
+  "react": "^18.2.0",
+  "react-router-dom": "^6.14.1",
+  "react-hot-toast": "^2.4.0",
+  "tailwindcss": "^3.3.3",
+  "lucide-react": "^0.263.1"
+}
+```
+
+## ⚙️ Configuración Inicial
+
+1. Clonar repositorio:
+```bash
+git clone https://github.com/danielc123avila/Desafio-Reac-MongoDb
+cd gestion-precios
+```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Variables de entorno (crear `.env`):
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+4. Iniciar servidor de desarrollo:
+```bash
+npm run dev
+```
+
+## 🖥️ Estructura de Archivos
+```
+src/
+├── components/       # Componentes reutilizables
+├── context/          # Contexto de autenticación
+├── pages/            # Vistas principales
+├── types/            # Tipos TypeScript
+├── api/              # Configuración API
+└── App.tsx           # Enrutamiento principal
+```
+
+## 📋 Requisitos del Sistema
+- Node.js v16+
+- npm v9+
+- Servidor backend ejecutándose en puerto 5000
+
+## 🛠️ Scripts Disponibles
+| Comando          | Descripción                     |
+|------------------|---------------------------------|
+| `npm run dev`    | Inicia servidor de desarrollo   |
+| `npm run build`  | Genera build para producción    |
+| `npm run lint`   | Ejecuta linter                  |
+| `npm run preview`| Previsualiza build de producción|
+
+## 📄 Licencia
+MIT License © 2025 Daniel Colina

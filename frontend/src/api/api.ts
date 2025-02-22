@@ -30,3 +30,11 @@ export const assignSpecialPrice = async (data: any, token: string) => {
   });
   return response.json();
 };
+
+// Nueva función para obtener todos los precios especiales
+export const fetchSpecialPrices = async (token: string) => {
+  const response = await fetch(`${API_URL}/obtenerPrecioEspecial`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  return response.json();
+};

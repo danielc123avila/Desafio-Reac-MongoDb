@@ -14,16 +14,33 @@ export interface Product {
   _id?: string;
   nombre: string;
   precioBase: number;
+  descripcion?: string;
+  activo?: boolean;
 }
 
-// Actualiza la interfaz FormData para que use los campos correctos
+export interface SpecialPrice {
+  id?: string;
+  _id?: string;
+  usuarioId: string;
+  productoId: string;
+  precio: number;
+  precioBase: number;
+  usuario?: {
+    id: string;
+    nombre: string;
+  };
+  producto?: {
+    id: string;
+    nombre: string;
+  };
+}
+
 export interface FormData {
   usuarioEmail: string;
   productoNombre: string;
   precio: string;
 }
 
-// Si necesitas mantener la interfaz original para otras partes de la aplicación
 export interface LegacyFormData {
   usuarioId: string;
   productoId: string;
